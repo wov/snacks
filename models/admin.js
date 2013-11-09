@@ -15,14 +15,15 @@ function addInfo(appInfo, callback) {
 	connection.connect();
 	console.log("Add AppInfo:");
 	console.log(appInfo);
-	query = "insert into applist(name,category_id,icon_id,snapshot_id,description,create_time,update_time) values( \
+	query = "insert into applist(name,category_id,icon_id,snapshot_id,description,create_time,update_time,url) values( \
 		'" + appInfo.name + "', \
 		'" + appInfo.category_id + "', \
 		" + appInfo.icon_id + ", \
 		" + appInfo.snapshot_id + ", \
 		'" + appInfo.description + "', \
 		" + appInfo.create_time + ", \
-		" + appInfo.update_time + " \
+		" + appInfo.update_time + ", \
+		'" + appInfo.url + "' \
 		);";
 	console.log(query);
 	connection.query(query, function (err, rows, fields) {
@@ -79,8 +80,20 @@ function addImageSource(type, imageInfo, callback) {
 	 					],function(err, rows, fields){
 	 						if (err) {throw err;};
 	 						connection.end();
-	 						return callback(err,rows);		
+	 						callback && callback.apply(null,[err,rows]);		
 	 					});
+
+}
+
+function getImageSourceById(id, callback) {
+	var connection = getConnection();
+	connection.connect();
+	var query = "select * from imagesource where id=?";
+	connection.query(query,[id],function (err,rows) {
+		if(err) {throw err;}
+		connection.end();
+		callback && callback.apply(null,[err,rows]);
+	});
 
 }
 
@@ -88,3 +101,4 @@ exports.addInfo = addInfo;
 exports.getAppList = getAppList;
 exports.addImageSource = addImageSource;
 exports.updateAppInfoById = updateAppInfoById;
+exports.getImageSourceById = getImageSourceById;
