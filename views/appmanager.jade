@@ -1,12 +1,12 @@
 extends layout  
 
 block content
-  form(action='/addAppInfo', method='post')
+  form(action='/addAppInfo', method='post', enctype='multipart/form-data')
     label 应用名称
       input(type='text', name='name')
     br
     label 描述
-      input(type='textarea', name='description', enctype='multipart/form-data')
+      input(type='textarea', name='description')
     br
     label 类型
       select(name='category_id') 
@@ -18,5 +18,8 @@ block content
     br
     label 图标
       input(type='file', name='icon')
+    br
+    label 截图
+      input(type='file', name='ccc')
     br
     input(type='submit', value='上传')

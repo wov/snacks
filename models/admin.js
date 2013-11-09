@@ -10,7 +10,7 @@ function getConnection() {
 
 }
 
-function addInfo(appInfo) {
+function addInfo(appInfo, callback) {
 	connection = getConnection();
 	connection.connect();
 	console.log("Add AppInfo:");
@@ -27,6 +27,7 @@ function addInfo(appInfo) {
 	connection.query(query, function (err, rows, fields) {
 		if (err) { throw err; };
 		console.log("This query is affected ");
+		callback && callback.apply(null,[err, rows])
 	});
 	connection.end();
 }
