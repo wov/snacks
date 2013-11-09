@@ -35,4 +35,11 @@
 		primary_key `id`(`id`)
 		) engine=innodb charset=utf8;
 
+## Api Documents
+
+* 获取应用列表
+	${hostname}/getApp
+	params:
+		cid : category_id
+
 
