@@ -298,6 +298,9 @@ article.market{
 	border-radius:4px;
 	-webkit-filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.2));
 
+	-webkit-animation-duration: 0.5s;
+	-webkit-animation-name: show;
+
 }
 
 .home .tip:after{
@@ -312,14 +315,10 @@ article.market{
 	top:14px;	
 }
 
-@-webkit-keyframes shake /* Safari and Chrome */
+@-webkit-keyframes show /* Safari and Chrome */
 {
-	0%   {	-webkit-filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.3)); top: 86px; left: 110px;}
-	20%   {	-webkit-filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.3)); top: 84px; left: 108px;}
-	40%   {	-webkit-filter: drop-shadow(6px 6px 0px rgba(0,0,0,0.3)); top: 84px; left: 110px;}
-	60%   {	-webkit-filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.3)); top: 86px; left: 112px;}
-	80%   {	-webkit-filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.3)); top: 88px; left: 112px;}
-	100%   { -webkit-filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.3)); top: 86px; left: 110px;}
+	0%   {	-webkit-filter: drop-shadow(0px 0px 0px rgba(0,0,0,0.2)); top: 91px; left: 115px;}
+	100%   { -webkit-filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.2)); top: 86px; left: 110px;}
 }
 
 

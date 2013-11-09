@@ -8,24 +8,31 @@ document.addEventListener('DOMContentLoaded',function(){
 	var _market = doc.querySelector('article.market');
 	var _select = doc.querySelector('article.market .select');
 	var _lists_ul = doc.querySelector('article.market ul');
+	var _content_ul = doc.querySelector('article.home ul');
 
-	var _adds = doc.querySelectorAll('.add');
-	for(var n=0; n < _adds.length;n++ ){
-		var _add = _adds[n];
-		_add.addEventListener(Event,function(e){
-			e.stopPropagation();
-			_home.classList.add('hide');
-		});
-	}
+	// 从localStorage 返回已经保存的数组
+	var getApps = function(){
+		var arr;
+		if(!localStorage.getItem('myApps')){
+			arr = [];
+		}else{
+			arr = JSON.parse(localStorage.getItem('myApps'));
+		}
+		return arr;
+	};
 
-	var _backs = doc.querySelectorAll('.back');
-	for(var n=0; n < _backs.length;n++ ){
-		var _back = _backs[n];
-		_back.addEventListener(Event,function(e){
-			e.stopPropagation();
-			_home.classList.remove('hide');
-			_select.blur();
-		});
+	// 将数组保存到localStorage
+	var saveApps = function(arr){
+        if(Object.prototype.toString.call( arr ) !== '[object Array]'){return false;}
+        localStorage.setItem('myApps',JSON.stringify(arr));
+	};
+
+	// 添加一个对象到localStorage 
+	// TODO : 过滤掉相同id的obj
+	var pushApp = function(obj){
+		var arr = getApps();
+		arr.push(obj);
+		saveApps(arr);
 	}
 
 	var get = function(url,callback,error,timeout,outtime,contentType){
@@ -71,32 +78,99 @@ document.addEventListener('DOMContentLoaded',function(){
 				html += '<li>' + 
 							'<div class="img"></div>' + 
 							'<div class="desc">'+el.description+'</div>' + 
-							'<div class="add2home">添加应用</div>' + 
+							'<div class="add2home" jsdata=\''+JSON.stringify(el)+'\'>添加应用</div>' + 
 						'</li>';
 			});
 			_lists_ul.innerHTML = html;
 		});
 	}
 
-	getApp();
 
 	var showTips = function(){
+		rmTips();
 		var _tip = document.createElement('div');
 		_tip.className = 'tip';
 		_tip.innerHTML = '点击这里添加应用';
 		_home.appendChild(_tip);
 	}
 
+	var rmTips = function(){
+		if(!!doc.querySelector('.tip')){
+			var _tip = doc.querySelector('.tip');
+			_tip.parentNode.removeChild(_tip);
+		}
+	}
+
 	var myApps = localStorage.getItem('myApps');
 	if(!myApps){
-		showTips();
 	}
 
 	_select.addEventListener('change',function(){
 		var option = {};
-		option.category_id = this.value;
+		option.cid = this.value;
 		getApp(option);
 	});
+
+	var showMyApps = function(){
+		var arr = getApps();
+		if(arr.length < 1){
+			showTips();
+		}else{
+			rmTips();
+			var html = '';
+			arr.forEach(function(el,index){
+				html += '<li>' +
+							'<div class="thumb"></div>' +
+							'<div class="title">'+el.name+'</div>'
+						+'</li>';
+			});
+
+			html += '<li class="add"></li>';
+			_content_ul.innerHTML = html
+		}
+	}
+
+
+	document.addEventListener(Event,function(e){
+		e.stopPropagation();
+		var _target = e.target;
+		if(_target.classList.contains('add2home')){
+			if(!_target.hasAttribute('jsdata')){
+				return false;
+			}else{
+				pushApp(JSON.parse(_target.getAttribute('jsdata')));
+				_home.classList.remove('hide');
+				showMyApps();
+			}
+		}
+
+		if(_target.classList.contains('add')){
+			_home.classList.add('hide');
+		}
+
+
+		if(_target.classList.contains('back')){
+			_home.classList.remove('hide');
+			_select.blur();
+		}
+
+
+	});
+
+
+
+	// 初始化 
+	var init = (function(){
+
+		// 显示自己的应用
+		showMyApps();
+
+		// 从服务器获取全部应用
+		getApp();
+
+	})();
+
+
 
 
 
