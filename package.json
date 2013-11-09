@@ -9,6 +9,7 @@
     "express": "3.4.4",
     "ejs": "*",
     "stylus": "*",
-    "jade": "*"
+    "jade": "*",
+    "mysql": "2.0.0"
   }
 }
