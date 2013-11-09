@@ -62,4 +62,26 @@ exports.getAppList = function (req, res) {
 
 }
 
+exports.showImage = function (req, res) {
+	id = req.query.id;
+	adminModel.getImageSourceById(id, function(err, rows) {
+			console.log(rows);
+			var image = {};
+			if(rows.length){
+				image = rows.pop();
+				var imagePath= fs.realpathSync('.')+"/"+image.image_path;
+				console.log(imagePath);
+				fs.readFile(imagePath,"binary",function(error,file) {
+					//res.contentType(image);
+					//res.set({'MIME-Type':'image/jpg'});
+					//res.type('jpg');
+					res.sendfile(file);
+				});
+
+			}
+			res.end();
+	});
+
+}
+
 
