@@ -10,15 +10,16 @@ function getConnection() {
 
 }
 
-function addInfo(appInfo) {
+function addInfo(appInfo, callback) {
 	connection = getConnection();
 	connection.connect();
 	console.log("Add AppInfo:");
 	console.log(appInfo);
-	query = "insert into applist(name,category_id,icon_id,description,create_time,update_time) values( \
+	query = "insert into applist(name,category_id,icon_id,snapshot_id,description,create_time,update_time) values( \
 		'" + appInfo.name + "', \
 		'" + appInfo.category_id + "', \
 		" + appInfo.icon_id + ", \
+		" + appInfo.snapshot_id + ", \
 		'" + appInfo.description + "', \
 		" + appInfo.create_time + ", \
 		" + appInfo.update_time + " \
@@ -27,6 +28,7 @@ function addInfo(appInfo) {
 	connection.query(query, function (err, rows, fields) {
 		if (err) { throw err; };
 		console.log("This query is affected ");
+		callback && callback.apply(null,[err, rows])
 	});
 	connection.end();
 }
@@ -46,8 +48,43 @@ function getAppList(category, callback) {
 
 		return callback(err,rows);
 	});
+}
+
+function updateAppInfoById(id, dataPair, callback) {
+	var connection = getConnection();
+	connection.connect();
+	var query = "update applist set ??=? where id=?";
+	connection.query(query,[dataPair.key, dataPair.value, id], function (err, rows) {
+		if (err) {throw err;}
+		connection.end();
+		return callback(err,rows);
+	});
+
+}
+
+function addImageSource(type, imageInfo, callback) {
+	var connection = getConnection();
+	connection.connect();
+	var query = "insert into imagesource (file_name,image_path,create_time,update_time,type) \
+	 	values (?,?,?,?,?);";
+	 console.log(query);
+	 console.log("imageInfo:");
+	 console.log(imageInfo);
+	 connection.query(query,[
+	 						imageInfo.file_name,
+	 						imageInfo.image_path,
+	 						imageInfo.create_time,
+	 						imageInfo.update_time,
+	 						imageInfo.type
+	 					],function(err, rows, fields){
+	 						if (err) {throw err;};
+	 						connection.end();
+	 						return callback(err,rows);		
+	 					});
 
 }
 
 exports.addInfo = addInfo;
 exports.getAppList = getAppList;
+exports.addImageSource = addImageSource;
+exports.updateAppInfoById = updateAppInfoById;
