@@ -7,6 +7,7 @@
 * applist  app列表
 * imagesource 图片资源
 
+	
 	create table `category` (
 		`id` int not null auto_increment comment '主键',
 		`name` varchar(50) not null  comment '名称',
