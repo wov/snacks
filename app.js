@@ -19,7 +19,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use(express.bodyParser({ keepExtensions: true, uploadDir: './public/images' }));
+app.use(express.bodyParser({ keepExtensions: true, uploadDir: './public/images/tmp' }));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());

@@ -18,12 +18,36 @@ exports.addAppInfo = function (req, res) {
 
     info = req.body;
     console.log(req.body);
-    info.icon_id = 1;
+    info.icon_id = 0;
+    info.snapshot_id = 0;
     info.create_time = info.update_time = Date.parse(new Date())/1000;
     adminModel.addInfo(info, function(err, rows){
-	    res.send('successful');
-    });
-	
+    	var appId = rows.insertId;
+    	icon  = {};
+    	icon.image_path = req.files.icon.path;
+    	icon.file_name = req.files.icon.name;
+    	icon.create_time=icon.update_time=Date.parse(new Date())/1000;
+    	icon.type = 1;
+    	adminModel.addImageSource(1, icon, function(err, rows){
+    		console.log('icon saved successfully');
+    		adminModel.updateAppInfoById(appId,{key:'icon_id',value:rows.insertId},function(){
+    			console.log('icon_id modified successfully!');
+    		});
+    	});
+
+    	snapshot  = {};
+    	snapshot.image_path = req.files.snapshot.path;
+    	snapshot.file_name = req.files.snapshot.name;
+    	snapshot.create_time = snapshot.update_time = Date.parse(new Date())/1000;
+    	snapshot.type = 2;
+    	adminModel.addImageSource(2, snapshot, function(err, rows){
+    		console.log('snapshot saved successfully');
+			adminModel.updateAppInfoById(appId,{key:'snapshot_id',value:rows.insertId},function(){
+    			console.log('snapshot_id modified successfully!');
+    		});
+    	});
+		res.redirect("/appManage");
+	});
 }
 
 exports.getAppList = function (req, res) {
