@@ -17,3 +17,14 @@ exports.addAppInfo = function (req, res) {
     adminModel.addInfo(info);
 	
 }
+
+exports.getAppList = function (req, res) {
+	category_id = req.query.cid;
+	console.log("cid:"+category_id);
+	result = adminModel.getAppList(category_id,function(err, rows){
+		res.end(JSON.stringify(rows));
+	});
+
+}
+
+
