@@ -1,0 +1,18 @@
+extends layout  
+
+block content
+  form(action='/addAppInfo', method='post')
+    label 应用名称
+      input(type='text', name='name')
+    br
+    label 描述
+      input(type='textarea', name='description')
+    br
+    label 类型
+      select(name='category') 
+        option(value='1') 教育
+        option(value='2') 生活
+        option(value='3') 摄影
+        option(value='4') 游戏
+        option(value='5') 娱乐
+    input(type='submit', value='上传')
