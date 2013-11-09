@@ -10,6 +10,7 @@
     "ejs": "*",
     "stylus": "*",
     "jade": "*",
-    "mysql": "*"
+    "mysql": "*",
+    "connect": "*"
   }
 }
