@@ -16,18 +16,6 @@
 			</header>
 			<div class="content">
 				<ul>
-					<li>
-						<div class="thumb" style="background-image:url('http://ww1.sinaimg.cn/large/64404958tw1eaeq97zo5aj20740740sp.jpg');"></div>
-						<div class="title">snack!</div>
-					</li>
-					<li>
-						<div class="thumb" style="background-image:url('http://ww1.sinaimg.cn/large/64404958tw1eaeq97zo5aj20740740sp.jpg');"></div>
-						<div class="title">snack!</div>
-					</li>
-					<li>
-						<div class="thumb"></div>
-						<div class="title">eizia ### games! develop br eizia studio.</div>
-					</li>
 					<li class="add"></li>
 				</ul>
 			</div>
@@ -66,35 +54,5 @@
 
 	<footer>&copy;2013</footer>
 
-	<script type="text/javascript">
-		var doc = document; 
-		document.addEventListener('touchstart',function(){});
-
-		var Event = 'ontouchstart' in window ? 'touchend' : 'click';
-
-		var _home = doc.querySelector('article.home');
-		var _market = doc.querySelector('article.market');
-		var _select = doc.querySelector('article.market .select');
-
-		var _adds = doc.querySelectorAll('.add');
-		for(var n=0; n < _adds.length;n++ ){
-			var _add = _adds[n];
-			_add.addEventListener(Event,function(e){
-				e.stopPropagation();
-				_home.classList.add('hide');
-			});
-		}
-
-		var _backs = doc.querySelectorAll('.back');
-		for(var n=0; n < _backs.length;n++ ){
-			var _back = _backs[n];
-			_back.addEventListener(Event,function(e){
-				e.stopPropagation();
-				_home.classList.remove('hide');
-				_select.blur();
-			});
-		}
-
-
-	</script>
+	<script type="text/javascript" src="script/index.js"></script>
 </html>
