@@ -75,6 +75,7 @@ exports.showImage = function (req, res) {
 					//res.contentType(image);
 					//res.set({'MIME-Type':'image/jpg'});
 					//res.type('jpg');
+					res.header({'Content-Type':'image/jpg'});
 					res.sendfile(file);
 				});
 
