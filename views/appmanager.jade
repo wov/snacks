@@ -1,28 +1,33 @@
 extends layout  
 
 block content
-  form(action='/addAppInfo', method='post', enctype='multipart/form-data')
-    label 应用名称
-      input(type='text', name='name')
-    br
-    label 描述
-      input(type='textarea', name='description')
-    br
-    label 应用链接
-      input(type='text', name='url')
-    br
-    label 类型
-      select(name='category_id') 
-        option(value='1') 教育
-        option(value='2') 生活
-        option(value='3') 摄影
-        option(value='4') 游戏
-        option(value='5') 娱乐
-    br
-    label 图标
-      input(type='file', name='icon')
-    br
-    label 截图
-      input(type='file', name='snapshot')
-    br
-    input(type='submit', value='上传')
+  header snacks . upload your mobile Web Apps
+  div.formContent
+    form(action='/addAppInfo', method='post', enctype='multipart/form-data',required)
+      ul
+        li
+          span 应用名称
+          input(type='text', name='name',placeholder='eg:myTestApp',required)
+        li
+          span 描述
+          input(type='textarea', name='description',required)
+        li
+          span 应用链接
+          input(type='text', name='url',placeholder='eg:http://www.google.com',required)
+        li
+          span 类型
+          select.select(name='category_id') 
+            option(value='1') 教育
+            option(value='2') 生活
+            option(value='3') 摄影
+            option(value='4') 游戏
+            option(value='5') 娱乐
+        li
+          span 图标
+          input.flie(type='file', name='icon',required,accept="image/*")
+        li
+          span 截图
+          input.file(type='file', name='snapshot',required,accept="image/*")
+        li
+          span
+          input.submit(type='submit', value='上传')

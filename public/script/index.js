@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded',function(){
 	var _home = doc.querySelector('article.home');
 	var _market = doc.querySelector('article.market');
 	var _select = doc.querySelector('article.market .select');
+	var _content = _home.querySelector('.content');
 	var _lists_ul = doc.querySelector('article.market ul');
 	var _content_ul = doc.querySelector('article.home ul');
 
@@ -111,52 +112,74 @@ document.addEventListener('DOMContentLoaded',function(){
 		getApp(option);
 	});
 
-	var showMyApps = function(){
+
+	// 主屏幕上显示 apps
+	// @params animaLastest 最新加入的是否显示动画。
+	var showMyApps = function(animaLastest){
 		var arr = getApps();
+
 		if(arr.length < 1){
 			showTips();
 		}else{
 			rmTips();
 			var html = '';
-			arr.forEach(function(el,index){
-				html += '<li>' +
-							'<div class="thumb"></div>' +
-							'<div class="title">'+el.name+'</div>'
-						+'</li>';
-			});
+
+			// 最新加入的放在最前面
+			for(var n=arr.length-1;n>=0;n--){
+				var el = arr[n];
+				html += '<li class="'+( (animaLastest && n === arr.length-1) ? 'popout' : '') +'">' +
+							'<div class="thumb open"></div>' +
+							'<div class="title open">'+el.name+'</div>' +
+						'</li>';
+			}
 
 			html += '<li class="add"></li>';
-			_content_ul.innerHTML = html
+			_content_ul.innerHTML = html;
+			_content.scrollTop = 0;
 		}
 	}
 
 
-	document.addEventListener(Event,function(e){
-		e.stopPropagation();
-		var _target = e.target;
-		if(_target.classList.contains('add2home')){
-			if(!_target.hasAttribute('jsdata')){
-				return false;
-			}else{
-				pushApp(JSON.parse(_target.getAttribute('jsdata')));
+	iTouch({
+		element : doc.body,
+		click : function(e){
+			var _target = e.target;
+
+			if(_target.classList.contains('add2home')){
+				if(!_target.hasAttribute('jsdata')){
+					return false;
+				}else{
+					pushApp(JSON.parse(_target.getAttribute('jsdata')));
+					_home.classList.remove('hide');
+					// 等动画显示完毕后再添加
+					setTimeout(function(){showMyApps(true);},500);
+				}
+			}
+
+			if(_target.classList.contains('add')){
+				_home.classList.add('hide');
+			}
+
+			if(_target.classList.contains('back')){
 				_home.classList.remove('hide');
-				showMyApps();
+				_select.blur();
+			}
+
+			if(_target.classList.contains('open')){
+				var _parent = _target.parentNode;
+
+				// var url = JSON.parse(data).url;
+				var url = 'http://www.baidu.com';
+				_parent.classList.remove('popout');
+				_parent.classList.add('opening');
+
+				setTimeout(function(){
+					window.open(url,'_blank');
+					_parent.classList.remove('opening');
+				},500);
 			}
 		}
-
-		if(_target.classList.contains('add')){
-			_home.classList.add('hide');
-		}
-
-
-		if(_target.classList.contains('back')){
-			_home.classList.remove('hide');
-			_select.blur();
-		}
-
-
 	});
-
 
 
 	// 初始化 
