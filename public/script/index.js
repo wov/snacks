@@ -37,8 +37,9 @@ document.addEventListener('DOMContentLoaded',function(){
 	}
 
 	var get = function(url,callback,error,timeout,outtime,contentType){
-	    // var contentType = contentType || 'application/json';
-	    // var outtime = outtime || 15000;
+
+	    var contentType = contentType || 'application/json';
+	    var outtime = outtime || 15000;
 
 	    var xhr = new XMLHttpRequest();
 	    xhr.onreadystatechange = function(){
@@ -51,11 +52,11 @@ document.addEventListener('DOMContentLoaded',function(){
 	        }
 	    };
 	    xhr.open('GET',url);
-	    // xhr.setRequestHeader("Content-type", contentType);
-	    // xhr.timeout = outtime;
-	    // xhr.ontimeout = function () { 
-	    //     timeout && timeout.apply(null);
-	    // }
+	    xhr.setRequestHeader("Content-type", contentType);
+	    xhr.timeout = outtime;
+	    xhr.ontimeout = function () { 
+	        timeout && timeout.apply(null);
+	    }
 	    xhr.send(null);
 	}
 
@@ -196,7 +197,6 @@ document.addEventListener('DOMContentLoaded',function(){
 
 		// 显示自己的应用
 		showMyApps();
-
 		// 从服务器获取全部应用
 		getApp();
 
