@@ -82,7 +82,9 @@ exports.getAppList = function (req, res) {
 exports.showManifest = function (req, res) {
 	res.setHeader('Content-Type', 'text/cache-manifest');
 	var str = "CACHE MANIFEST\n";
-	str += "";
+	str += "/stylesheets/style.css\n";
+	str += "/script/touch.js\n";
+	str += "/script/index.js\n";
 	res.end(str);
 }
 
