@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
 			obj.forEach(function(el,index){
 				html += '<li>' + 
-							'<div class="img"></div>' + 
+							'<div class="img" style="background:url(\''+el.icon_url+'\')"></div>' + 
 							'<div class="desc">'+el.description+'</div>' + 
 							'<div class="add2home" jsdata=\''+JSON.stringify(el)+'\'>添加应用</div>' + 
 						'</li>';
@@ -119,6 +119,7 @@ document.addEventListener('DOMContentLoaded',function(){
 		var arr = getApps();
 
 		if(arr.length < 1){
+			_content_ul.innerHTML = '<li class="add"></li>';
 			showTips();
 		}else{
 			rmTips();
@@ -127,8 +128,9 @@ document.addEventListener('DOMContentLoaded',function(){
 			// 最新加入的放在最前面
 			for(var n=arr.length-1;n>=0;n--){
 				var el = arr[n];
-				html += '<li class="'+( (animaLastest && n === arr.length-1) ? 'popout' : '') +'">' +
-							'<div class="thumb open"></div>' +
+
+				html += '<li jsurl="'+el.url+'" class="'+( (animaLastest && n === arr.length-1) ? 'popout' : '') +'">' +
+							'<div class="thumb open" style="background:url(\''+el.icon_url+'\')"></div>' +
 							'<div class="title open">'+el.name+'</div>' +
 						'</li>';
 			}
@@ -165,11 +167,18 @@ document.addEventListener('DOMContentLoaded',function(){
 				_select.blur();
 			}
 
+			if(_target.classList.contains('clear')){
+				var r = confirm('是否清空全部应用');
+				if(r){
+					localStorage.clear();
+					showMyApps();
+				}
+			}
+
 			if(_target.classList.contains('open')){
 				var _parent = _target.parentNode;
-
-				// var url = JSON.parse(data).url;
-				var url = 'http://www.baidu.com';
+				if(!_parent.hasAttribute('jsurl')){return;}
+				var url = _parent.getAttribute('jsurl');
 				_parent.classList.remove('popout');
 				_parent.classList.add('opening');
 

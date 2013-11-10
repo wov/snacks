@@ -70,6 +70,11 @@ footer{
 	font-size: 12px;
 }
 
+footer a{
+	position: absolute;
+	right: 5px;
+}
+
 .main{
 	position: relative;
 	width: 320px;
