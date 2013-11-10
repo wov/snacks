@@ -2,7 +2,7 @@ var adminModel = require('../models/admin');
 var fs = require('fs');
 
 exports.index = function(req, res){
-    res.redirect("/index.html");
+    res.render("appmanager");
 }
 
 exports.addAppInfo = function (req, res) {
@@ -82,10 +82,7 @@ exports.getAppList = function (req, res) {
 exports.showManifest = function (req, res) {
 	res.setHeader('Content-Type', 'text/cache-manifest');
 	var str = "CACHE MANIFEST\n";
-	str += "/stylesheets/style.css\n";
-	str += "/script/touch.js\n";
-	str += "/script/index.js\n";
-	
+	str += "";
 	res.end(str);
 }
 
