@@ -12,14 +12,13 @@ exports.index = function(req, res){
 }
 
 exports.addAppInfo = function (req, res) {
-	console.log('----');
-	console.log(req.files);
-	console.log('----');
 
     info = req.body;
-    console.log(req.body);
     info.icon_id = 0;
     info.snapshot_id = 0;
+    if (info.url.match(/^http.*/g) == null) {
+    	info.url = "http://"+info.url;
+    }
     info.create_time = info.update_time = Date.parse(new Date())/1000;
     adminModel.addInfo(info, function(err, rows){
     	var appId = rows.insertId;
