@@ -2,7 +2,7 @@ var mysql = require('mysql');
 
 function getConnection() {
 	return mysql.createConnection({
-	host: '192.168.1.101', 
+	host: 'localhost', 
 	user: 'snacks',
 	password: 'snacks',
 	database: 'snacks',
@@ -100,6 +100,7 @@ function getImageSourceById(id, callback) {
 function getImageSourceByIds(ids, callback) {
 	var connection = getConnection();
 	connection.connect();
+	if(ids.length > 0){
 	var query = "select * from imagesource where `id` in ("+ids.join(',')+")";
 	console.log(query);
 	connection.query(query,function (err,rows) {
@@ -107,7 +108,7 @@ function getImageSourceByIds(ids, callback) {
 		connection.end();
 		callback && callback.apply(null,[err,rows]);
 	});
-
+	}
 }
 
 exports.addInfo = addInfo;
