@@ -12,14 +12,13 @@ exports.index = function(req, res){
 }
 
 exports.addAppInfo = function (req, res) {
-	console.log('----');
-	console.log(req.files);
-	console.log('----');
 
     info = req.body;
-    console.log(req.body);
     info.icon_id = 0;
     info.snapshot_id = 0;
+    if (info.url.match(/^http.*/g) == null) {
+    	info.url = "http://"+info.url;
+    }
     info.create_time = info.update_time = Date.parse(new Date())/1000;
     adminModel.addInfo(info, function(err, rows){
     	var appId = rows.insertId;
@@ -57,32 +56,41 @@ exports.getAppList = function (req, res) {
 	res.set({
 	  'Content-Type': 'text/plain; charset=utf-8',
 	})
-		res.end(JSON.stringify(rows));
-	});
-
-}
-
-exports.showImage = function (req, res) {
-	id = req.query.id;
-	adminModel.getImageSourceById(id, function(err, rows) {
-			console.log(rows);
-			var image = {};
-			if(rows.length){
-				image = rows.pop();
-				var imagePath= fs.realpathSync('.')+"/"+image.image_path;
-				console.log(imagePath);
-				fs.readFile(imagePath,"binary",function(error,file) {
-					//res.contentType(image);
-					//res.set({'MIME-Type':'image/jpg'});
-					//res.type('jpg');
-					res.header({'Content-Type':'image/jpg'});
-					res.sendfile(file);
-				});
-
+		var idList = [];
+		for(var i=0;i<rows.length;i++) {
+			idList.push(rows[i].icon_id);
+			idList.push(rows[i].snapshot_id);
+		}
+		console.log("++++++");
+		console.log(idList);
+		adminModel.getImageSourceByIds(idList,function(err,imageRows){
+			var listResult = [];
+			for(var k=0;k<rows.length;k++) {
+				var resultItem = rows[k];
+				for (var j=0; j< imageRows.length; j++) {
+					if(imageRows[j].id == resultItem.icon_id) {
+						resultItem.icon_url = "http://"+req.host+imageRows[j].image_path.replace('public','');
+					}
+					if(imageRows[j].id == resultItem.snapshot_id) {
+						resultItem.snapshot_url = "http://"+req.host+imageRows[j].image_path.replace('public','');
+					}
+				}
+				listResult.push(resultItem);
 			}
-			res.end();
+			console.log(listResult);
+			res.end(JSON.stringify(listResult));
+		});
+		
 	});
 
 }
+
+exports.showManifest = function (req, res) {
+	res.setHeader('Content-Type', 'text/cache-manifest');
+	var str = "CACHE MANIFEST\n";
+	str += "";
+	res.end(str);
+}
+
 
 
