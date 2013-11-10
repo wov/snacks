@@ -97,8 +97,22 @@ function getImageSourceById(id, callback) {
 
 }
 
+function getImageSourceByIds(ids, callback) {
+	var connection = getConnection();
+	connection.connect();
+	var query = "select * from imagesource where `id` in ("+ids.join(',')+")";
+	console.log(query);
+	connection.query(query,function (err,rows) {
+		if(err) {throw err;}
+		connection.end();
+		callback && callback.apply(null,[err,rows]);
+	});
+
+}
+
 exports.addInfo = addInfo;
 exports.getAppList = getAppList;
 exports.addImageSource = addImageSource;
 exports.updateAppInfoById = updateAppInfoById;
 exports.getImageSourceById = getImageSourceById;
+exports.getImageSourceByIds = getImageSourceByIds;

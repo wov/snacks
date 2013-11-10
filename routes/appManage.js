@@ -57,26 +57,60 @@ exports.getAppList = function (req, res) {
 	res.set({
 	  'Content-Type': 'text/plain; charset=utf-8',
 	})
-		res.end(JSON.stringify(rows));
+		var idList = [];
+		for(var i=0;i<rows.length;i++) {
+			idList.push(rows[i].icon_id);
+			idList.push(rows[i].snapshot_id);
+		}
+		console.log("++++++");
+		console.log(idList);
+		adminModel.getImageSourceByIds(idList,function(err,imageRows){
+			var listResult = [];
+			for(var k=0;k<rows.length;k++) {
+				var resultItem = rows[k];
+				for (var j=0; j< imageRows.length; j++) {
+					if(imageRows[j].id == resultItem.icon_id) {
+						resultItem.icon_url = "http://"+req.host+imageRows[j].image_path.replace('public','');
+					}
+					if(imageRows[j].id == resultItem.snapshot_id) {
+						resultItem.snapshot_url = "http://"+req.host+imageRows[j].image_path.replace('public','');
+					}
+				}
+				listResult.push(resultItem);
+			}
+			console.log(listResult);
+			res.end(JSON.stringify(listResult));
+		});
+		
 	});
 
 }
 
 exports.showImage = function (req, res) {
 	id = req.query.id;
+	//res.header({'Content-Type':'image/jpg'});
+	//res.type('jpg');
+	res.writeHead(200, {"Content-Type": "image/jpg"});
 	adminModel.getImageSourceById(id, function(err, rows) {
-			console.log(rows);
+			//console.log(rows);
 			var image = {};
 			if(rows.length){
 				image = rows.pop();
-				var imagePath= fs.realpathSync('.')+"/"+image.image_path;
-				console.log(imagePath);
+				// console.log("======");
+				// console.log(image.image_path);
+				// console.log(image.image_path.replace('public',''));
+				// res.send(image.image_path.replace('public',''));
+				// console.log(image.image_path.split('/',1));
+				 var imagePath= fs.realpathSync('.')+"/"+image.image_path;
+				// res.sendfile(imagePath);
+				// console.log(imagePath);
 				fs.readFile(imagePath,"binary",function(error,file) {
 					//res.contentType(image);
 					//res.set({'MIME-Type':'image/jpg'});
 					//res.type('jpg');
-					res.header({'Content-Type':'image/jpg'});
-					res.sendfile(file);
+					//res.header({'Content-Type':'image/jpg'});
+					//res.setHeader("Content-Type","image/jpg");
+					res.write(file);
 				});
 
 			}
