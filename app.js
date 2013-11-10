@@ -36,7 +36,6 @@ app.get('/users', user.list);
 app.get('/appManage', appManage.index);
 app.post('/addAppInfo', appManage.addAppInfo);
 app.get('/getapp', appManage.getAppList);
-app.get('/showimage',appManage.showImage);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

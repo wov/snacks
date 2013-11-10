@@ -86,37 +86,5 @@ exports.getAppList = function (req, res) {
 
 }
 
-exports.showImage = function (req, res) {
-	id = req.query.id;
-	//res.header({'Content-Type':'image/jpg'});
-	//res.type('jpg');
-	res.writeHead(200, {"Content-Type": "image/jpg"});
-	adminModel.getImageSourceById(id, function(err, rows) {
-			//console.log(rows);
-			var image = {};
-			if(rows.length){
-				image = rows.pop();
-				// console.log("======");
-				// console.log(image.image_path);
-				// console.log(image.image_path.replace('public',''));
-				// res.send(image.image_path.replace('public',''));
-				// console.log(image.image_path.split('/',1));
-				 var imagePath= fs.realpathSync('.')+"/"+image.image_path;
-				// res.sendfile(imagePath);
-				// console.log(imagePath);
-				fs.readFile(imagePath,"binary",function(error,file) {
-					//res.contentType(image);
-					//res.set({'MIME-Type':'image/jpg'});
-					//res.type('jpg');
-					//res.header({'Content-Type':'image/jpg'});
-					//res.setHeader("Content-Type","image/jpg");
-					res.write(file);
-				});
-
-			}
-			res.end();
-	});
-
-}
 
 
