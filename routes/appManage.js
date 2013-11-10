@@ -1,12 +1,12 @@
 var adminModel = require('../models/admin');
 var fs = require('fs');
-
+var info = {};
 exports.index = function(req, res){
     res.render("appmanager");
 }
 
 exports.addAppInfo = function (req, res) {
-	var info = {};
+
     info = req.body;
     info.icon_id = 0;
     info.snapshot_id = 0;
@@ -47,9 +47,9 @@ exports.getAppList = function (req, res) {
 	category_id = req.query.cid;
 	console.log("cid:"+category_id);
 	result = adminModel.getAppList(category_id,function(err, rows){
-	res.set({
-	  'Content-Type': 'text/plain; charset=utf-8',
-	})
+	// res.set({
+	//   'Content-Type': 'text/plain; charset=utf-8',
+	// })
 		var idList = [];
 		for(var i=0;i<rows.length;i++) {
 			idList.push(rows[i].icon_id);
