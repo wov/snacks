@@ -52,10 +52,10 @@ document.addEventListener('DOMContentLoaded',function(){
 	    };
 	    xhr.open('GET',url);
 	    // xhr.setRequestHeader("Content-type", contentType);
-	    xhr.timeout = outtime;
-	    xhr.ontimeout = function () { 
-	        timeout && timeout.apply(null);
-	    }
+	    // xhr.timeout = outtime;
+	    // xhr.ontimeout = function () { 
+	    //     timeout && timeout.apply(null);
+	    // }
 	    xhr.send(null);
 	}
 
