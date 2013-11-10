@@ -1,18 +1,12 @@
 var adminModel = require('../models/admin');
 var fs = require('fs');
-var info = {};
 
 exports.index = function(req, res){
-    // res.send('this is appmanage');
-    // res.render('appmanager');
-    // res.send(req.body);
-	res.render('appmanager');
-
-
+    res.redirect("/index.html");
 }
 
 exports.addAppInfo = function (req, res) {
-
+	var info = {};
     info = req.body;
     info.icon_id = 0;
     info.snapshot_id = 0;
