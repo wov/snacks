@@ -50,6 +50,7 @@ exports.getAppList = function (req, res) {
 	// res.set({
 	//   'Content-Type': 'text/plain; charset=utf-8',
 	// })
+	if (rows.length){
 		var idList = [];
 		for(var i=0;i<rows.length;i++) {
 			idList.push(rows[i].icon_id);
@@ -74,8 +75,12 @@ exports.getAppList = function (req, res) {
 			console.log(listResult);
 			res.end(JSON.stringify(listResult));
 		});
-		
+	
+	} else {
+		res.end('');
+	}	
 	});
+
 
 }
 
