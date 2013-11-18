@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="main">
+
+                <article class="home">
+                        <header>
+                                <span>Snacks</span>
+                                <em class="add">add</em>
+                        </header>
+                        <div class="content">
+                                <ul>
+                                        <li class="add"></li>
+                                </ul>
+                        </div>
+                </article>
+
+                <article class="market">
+                        <header>
+                                <em class="back">home</em>
+                                <span>Snacks Market</span>
+                        </header>
+
+                        <div class="filters">
+                                <form>
+                                        <select class="select" name="category_id">
+                                                <option value="0">全部</option>
+                                                <option value="1">教育</option>
+                                                <option value="2">生活</option>
+                                                <option value="3">摄影</option>
+                                                <option value="4">游戏</option>
+                                                <option value="5">音乐</option>
+                                        </select>
+                                </form>
+                        </div>
+
+                        <div class="lists">
+                                <ul>
+                                </ul>
+                        </div>
+                </article>
+</div>
+
+<footer>
+                &copy;2013
+                <a href="javascript:void(0);" class="clear">清空全部</a>
+</footer>
+<script type="text/javascript" src="{{url_for('static',filename='script/touch.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='script/index.js')}}"></script>
+{% endblock %}
