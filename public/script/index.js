@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
 			obj.forEach(function(el,index){
 				html += '<li>' + 
-							'<div class="img" style="background:url(\''+el.icon_url+'\')"></div>' + 
+							'<div class="img" style="background-image:url(\''+el.icon_url+'\')"></div>' + 
 							'<div class="desc">'+el.description+'</div>' + 
 							'<div class="add2home" jsdata=\''+JSON.stringify(el)+'\'>添加应用</div>' + 
 						'</li>';
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded',function(){
 				var el = arr[n];
 
 				html += '<li jsurl="'+el.url+'" class="'+( (animaLastest && n === arr.length-1) ? 'popout' : '') +'">' +
-							'<div class="thumb open" style="background:url(\''+el.icon_url+'\')"></div>' +
+							'<div class="thumb open" style="background-image:url(\''+el.icon_url+'\')"></div>' +
 							'<div class="title open">'+el.name+'</div>' +
 						'</li>';
 			}

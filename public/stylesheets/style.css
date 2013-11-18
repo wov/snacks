@@ -275,6 +275,7 @@ article.market{
 	width: 60px;
 	height: 60px;
 	margin-right: 8px;
+	background-size:60px; 
 }
 
 .market li .add2home{

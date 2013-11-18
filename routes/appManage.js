@@ -64,10 +64,10 @@ exports.getAppList = function (req, res) {
 				var resultItem = rows[k];
 				for (var j=0; j< imageRows.length; j++) {
 					if(imageRows[j].id == resultItem.icon_id) {
-						resultItem.icon_url = "http://"+req.host+imageRows[j].image_path.replace('public','');
+						resultItem.icon_url = "http://"+req.host+":3000"+imageRows[j].image_path.replace('public','');
 					}
 					if(imageRows[j].id == resultItem.snapshot_id) {
-						resultItem.snapshot_url = "http://"+req.host+imageRows[j].image_path.replace('public','');
+						resultItem.snapshot_url = "http://"+req.host+":3000"+imageRows[j].image_path.replace('public','');
 					}
 				}
 				listResult.push(resultItem);
