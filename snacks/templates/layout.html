@@ -1,7 +1,8 @@
 <!doctype html>
 <head>
-<title>Snacks</title>
+<title>{%block title%}{% endblock %}Snacks</title>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='stylesheet/style.css') }}">
+{% block metadata %}{% endblock %}
 </head>
 <body>
 <div class=page>

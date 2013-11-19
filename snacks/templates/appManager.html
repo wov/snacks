@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block title %}Manage Your App - {% endblock %}
+{% block metadata %}
+<link rel="stylesheet" href="{{url_for('static',filename='stylesheet/main.css')}}">
+{% endblock %}{% block body %}
+<header>snacks . upload your mobile Web Apps</header>
+<div class="formContent">
+	<form action="/addAppInfo" method="post" enctype="multipart/form-data" required>
+		<ul>
+			<li><span>应用名称</span><input type="text" name="name" placeholder="eg:myTestApp" required></li>
+			<li><span>描述</span><input type="textarea" name="description" required></li>
+			<li><span>应用链接</span><input type="text" name="url" placeholder="eg:http://www.google.com" required></li>
+			<li><span>类型</span><select name="category_id" class="select"> 
+				<option value="1">教育</option>
+				<option value="2">生活</option>
+				<option value="3">摄影</option>
+				<option value="4">游戏</option>
+				<option value="5">娱乐</option>
+								</select></li>
+			<li><span>图标</span><input type="file" name="icon" required accept="image/*" class="flie"></li>
+			<li><span>截图</span><input type="file" name="snapshot" required accept="image/*" class="file"></li>
+			<li><span></span><input type="submit" value="上传" class="submit"></li>
+		</ul>
+	</form>
+</div>
+{% endblock %}
